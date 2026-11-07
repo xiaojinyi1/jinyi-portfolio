@@ -44,7 +44,7 @@ npx serve .
 目标仓库：`https://github.com/xiaojinyi1/jinyi-portfolio`  
 目标站点：`https://xiaojinyi1.github.io/jinyi-portfolio/`
 
-> 当前状态：本地站点、Three.js 场景和 Pages workflow 已完成；远程仓库尚未创建/推送（代理环境的远程上传受 CC Safety Net 限制）。在 Git Bash 运行 `bash deploy-github.sh`，或按下面步骤手动创建空仓库并推送即可上线。
+> 当前状态：已上线。仓库为 `https://github.com/xiaojinyi1/jinyi-portfolio`，站点为 `https://xiaojinyi1.github.io/jinyi-portfolio/`；Pages workflow 在 `main` 推送后自动发布。以后更新只需提交并推送 `main`。
 
 1. 在 GitHub 新建一个空仓库 `jinyi-portfolio`（不要勾选 README / .gitignore）。
 2. 也可以直接在 Git Bash 运行仓库内的一键脚本（脚本会用已保存的 GitHub 凭据创建仓库、推送并尝试启用 Pages）：
@@ -305,7 +305,7 @@ window.PORTFOLIO = {
 ### 已知限制
 
 - **校园二手书交易平台**：README 曾写 `https://xiaojinyi1.github.io/campus-book-market/`，但当前该 URL 和 `xiaojinyi1/campus-book-market` 仓库均 404；因此详情页只显示“课程项目 · 未公开部署”，没有放死链。以后部署后把 `live`/`source` 加回 `projects.js` 即可。
-- **GitHub Pages 尚未上线**：本地已完成 Three.js/profile 版本；远程仓库 `jinyi-portfolio` 仍需在 Git Bash 运行 `bash deploy-github.sh` 或在 GitHub 手动创建并推送。代理环境的远程上传被 CC Safety Net 禁止，不能代为完成。
+- **线上更新延迟**：Pages workflow 触发后通常需要几十秒；若刚推送后仍看到旧页面，等待 Actions 完成再刷新即可。
 
 ---
 
