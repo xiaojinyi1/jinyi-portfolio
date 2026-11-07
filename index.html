@@ -22,6 +22,7 @@
     <div class="no-js-profile">
       <p><strong>PROFILE / 00</strong> 武汉理工大学 · 大二在读 · 绩点 3.9</p>
       <p>科研成果：暂无 · 证书：Python 二级、CET-4 · 爱好：追剧、打游戏</p>
+      <p>五件作品覆盖生成式 3D、Canvas 游戏、网络数据可视化、全栈 CRUD 与数据库设计。</p>
     </div>
     <ul>
       <li><a href="work/one-sentence-one-city.html">01 / 一句话，一座城 — 生成式 3D / 互动叙事</a></li>
@@ -49,6 +50,7 @@
     </header>
 
     <main id="works">
+      <div class="hero" id="hero">
       <section class="stage" id="stage" aria-label="作品广告牌">
         <div class="scene" id="scene" aria-hidden="true">
           <canvas class="webgl-scene" id="webgl" aria-hidden="true"></canvas>
@@ -103,7 +105,8 @@
         <div class="info-counter" id="infoCounter">PROFILE / 00 · 个人档案</div>
         <h1 id="infoTitle">JINYI</h1>
         <p class="info-tagline" id="infoTagline">武汉理工大学 · 大二在读</p>
-        <p class="info-summary" id="infoSummary">把想法做成可以走进去的网页，也把每一次练习做成可以拿得出手的作品。</p>
+        <p class="info-summary" id="infoSummary">武汉理工大学大二在读，绩点 3.9；正在用课程项目和个人练习，把想法做成可以访问的页面。</p>
+        <a class="profile-more" id="profileMore" href="#profileSheet" hidden>完整简介 <span>↓</span></a>
         <div class="profile-facts" id="profileFacts"></div>
         <ul class="info-chips" id="infoChips">
           <li>GPA 3.9</li>
@@ -117,6 +120,20 @@
       </section>
 
       <nav class="tabs" id="tabs" aria-label="作品切换"></nav>
+      </div>
+
+      <section class="profile-sheet" id="profileSheet" aria-labelledby="profileSheetTitle" hidden>
+        <div class="profile-sheet-head">
+          <p class="profile-sheet-eyebrow">PROFILE DOSSIER / 00</p>
+          <h2 id="profileSheetTitle">关于我</h2>
+          <p>武汉理工大学 · 大二在读 · 绩点 3.9</p>
+        </div>
+        <div class="profile-sheet-body">
+          <div class="profile-bio" id="profileBio"></div>
+          <div class="profile-story-grid" id="profileStory"></div>
+        </div>
+        <p class="profile-note" id="profileNote"></p>
+      </section>
 
       <section class="fallback" id="fallback" aria-label="作品列表">
         <div class="fallback-head">

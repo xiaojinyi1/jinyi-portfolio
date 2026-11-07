@@ -18,6 +18,8 @@
     type: profile.type || "个人档案 / PROFILE",
     role: profile.role || "",
     summary: profile.summary || "",
+    bio: profile.bio || [],
+    profileNote: profile.profileNote || "",
     stack: [{ name: "KEY", items: ["GPA 3.9", "Python 二级", "CET-4"] }],
     accent: profile.accent || "#E3A45C",
     accentDeep: profile.accentDeep || "#17130E",
@@ -45,6 +47,11 @@
   var loader = document.getElementById("loader");
   var cursorLabel = document.getElementById("cursorLabel");
   var fallbackGrid = document.getElementById("fallbackGrid");
+  var profileSheet = document.getElementById("profileSheet");
+  var profileMore = document.getElementById("profileMore");
+  var profileBio = document.getElementById("profileBio");
+  var profileStory = document.getElementById("profileStory");
+  var profileNote = document.getElementById("profileNote");
   var layers = [document.getElementById("posterA"), document.getElementById("posterB")];
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var finePointer = window.matchMedia("(pointer: fine)");
@@ -104,6 +111,40 @@
         '<span class="profile-fact-detail">' + esc(fact.detail) + "</span>" +
       "</article>";
     }).join("");
+  }
+
+  function profileStoryMarkup(facts) {
+    var order = ["gpa", "education", "research", "certs", "interests"];
+    var byId = Object.create(null);
+    var ordered = [];
+    (facts || []).forEach(function (fact) {
+      byId[fact.id] = fact;
+    });
+    order.forEach(function (id) {
+      if (byId[id]) ordered.push(byId[id]);
+    });
+    (facts || []).forEach(function (fact) {
+      if (ordered.indexOf(fact) < 0) ordered.push(fact);
+    });
+    return ordered.map(function (fact) {
+      return '<article class="profile-story-card' + (fact.highlight ? " is-highlight" : "") + '">' +
+        '<span class="profile-story-label">' + esc(fact.label) + "</span>" +
+        '<strong class="profile-story-value">' + esc(fact.value) + "</strong>" +
+        '<p class="profile-story-text">' + esc(fact.story || fact.detail) + "</p>" +
+      "</article>";
+    }).join("");
+  }
+
+  function buildProfileDossier() {
+    if (!profileItem) return;
+    var bio = profileItem.bio && profileItem.bio.length ? profileItem.bio : [profileItem.summary];
+    if (profileBio) {
+      profileBio.innerHTML = bio.map(function (paragraph) {
+        return "<p>" + esc(paragraph) + "</p>";
+      }).join("");
+    }
+    if (profileStory) profileStory.innerHTML = profileStoryMarkup(profileItem.facts);
+    if (profileNote) profileNote.textContent = profileItem.profileNote || "";
   }
 
   function buildProfilePoster(layer, item) {
@@ -276,6 +317,8 @@
       }
     }
     if (info) info.classList.toggle("is-profile", isProfile);
+    if (profileSheet) profileSheet.hidden = !isProfile;
+    if (profileMore) profileMore.hidden = !isProfile;
     var cta = document.getElementById("openCase");
     if (cta) {
       if (isProfile) {
@@ -519,7 +562,10 @@
         '<h2>' + esc(profileItem.title) + "</h2>" +
         '<p class="profile-card-tagline">' + esc(profileItem.tagline) + "</p>" +
         '<div class="profile-facts profile-facts--fallback">' + profileFactsMarkup(profileItem.facts, "profile-fact") + "</div>" +
-        '<p class="profile-card-note">' + esc(profileItem.summary) + "</p>";
+        '<div class="profile-card-bio">' + (profileItem.bio || []).map(function (paragraph) {
+          return "<p>" + esc(paragraph) + "</p>";
+        }).join("") + "</div>" +
+        '<p class="profile-card-note">' + esc(profileItem.profileNote || profileItem.summary) + "</p>";
       fallbackGrid.appendChild(profileCard);
     }
     projects.forEach(function (project, index) {
@@ -539,6 +585,7 @@
     state.index = initialIndex();
     buildTabs();
     buildBulbs();
+    buildProfileDossier();
     var first = items[state.index];
     buildPoster(layers[0], first, state.index);
     layers[0].classList.add("is-visible");

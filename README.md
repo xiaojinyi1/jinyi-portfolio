@@ -133,12 +133,14 @@ transition: { mode: "roll", duration: 720 }
 window.PORTFOLIO = {
   site: { name, role, location, intro, github, title, description, year },
   settings: { initial, clickScreen, transition, cameraDrift, bulbChase },
-  profile: { slug, title, tagline, facts: [ /* 5 项 */ ], ... },
+  profile: { slug, title, tagline, bio: [ /* 3 段 */ ], facts: [ /* 5 项 */ ], profileNote, ... },
   projects: [ /* 5 个项目 */ ]
 };
 ```
 
 这个文件是 classic script，主页和详情页都直接读取它，不需要请求 JSON。改文案、换封面、加作品只改这一处（以及新增 `work/<slug>.html` 壳页）。`profile` 与 `projects` 分开：profile 只出现在主页/fallback，不生成详情页；`settings.initial` 默认是 `"profile"`。
+
+个人简介分两层：首屏 `.info` 显示摘要、5 项事实和“完整简介 ↓”；广告牌下方 `#profileSheet` 显示三段 `bio`、按 `gpa → education → research → certs → interests` 排序的故事卡，以及 `profileNote`。所有内容来自用户已提供的信息；专业、排名/奖学金、目标方向、联系方式等未提供字段不补写。
 
 ### 项目字段
 
@@ -166,7 +168,9 @@ window.PORTFOLIO = {
 | `slug` / `title` / `titleCn` / `titleEn` | 00 关于的标识与标题 |
 | `tagline` | 学校 / 年级等一句话介绍 |
 | `summary` | 信息栏简介与 fallback 说明 |
-| `facts[5]` | `{label,value,detail,highlight}`，信息栏与 fallback 的事实卡；`highlight` 用于 GPA 跨列高亮 |
+| `bio[3]` | 完整简介三段：身份与定位、五件作品涉及的方向、科研/证书/爱好；只写已提供的信息 |
+| `facts[5]` | `{label,value,detail,story,highlight}`，信息栏、档案故事卡与 fallback 的事实卡；`story` 是每项的展开说明，`highlight` 用于 GPA 跨列高亮 |
+| `profileNote` | 完整简介末尾的边界说明：“未列出的经历暂未补充” |
 | `poster` | 广告牌 profile 海报配色/角标；无需 cover |
 | `accent` / `accentDeep` | 00 关于的主题色 |
 
@@ -226,6 +230,7 @@ window.PORTFOLIO = {
 - `.billboard` > `.frame` > `.screen`：两块 `.poster-layer` 叠放，过渡时一进一出。
 - `.screen` 的 `data-transition` 切换 `roll` / `wipe` / `fade`；`--dur` 控制时长。
 - 顶部 `PROJECTS` 灯箱、底部 `NOW SHOWING` 灯箱、跑马灯泡和钢架由 CSS 绘制。
+- `.hero` 包住 `.stage`、`#info`、`#tabs` 和 `.controls`，让 00 关于的绝对定位信息栏仍以首屏为参照；`#profileSheet` 在 `.hero` 外，作为下一屏的完整档案。
 - `#info`、`#tabs`、`.controls` 是舞台的兄弟节点：桌面绝对定位在左下/底部，移动端自然流式排布。
 
 ---
@@ -281,19 +286,21 @@ window.PORTFOLIO = {
 - 11 张 cover/gallery SVG 全部存在，且都是 1600×900；数据中的 `cover`/`gallery.src` 都能解析到文件。
 - 主页与 5 个详情页的 CSS/JS 引用路径正确；详情页图片通过 `../assets/` 解析，不会出现 `work/assets/...` 断图。
 - 主页 `index.html` 在 1440 / 1180 / 1024 / 901 宽度下，信息栏与广告牌不水平重叠；900 / 620 / 390 下广告牌宽度受 `svh` 约束，不再被舞台裁切。
-- 广告牌双层的 `z-index`、`touch-action`、重复 Enter 处理已修正；profile 的 5 项事实、3 个 chips、6 个 tab 均与数据一致。
+- 广告牌双层的 `z-index`、`touch-action`、重复 Enter 处理已修正；profile 的 5 项事实、3 个 chips、6 个 tab、3 段 `bio` 与 5 张故事卡均与数据一致。
 - 没有外部 `src`/`url()`；所有本地资源都用相对路径。
 
 ### 已做的浏览器检查
 
 - 用 Chrome headless 以 `--allow-file-access-from-files` 直接打开 `file://`，WebGL 通过 `--enable-unsafe-swiftshader --use-angle=swiftshader` 渲染：
-  - `qa/home-desktop.png`（1440×1000）：00 关于海报、GPA 3.9、4 张事实卡、信息栏 5 项事实、6 个 tab、Three.js 车/地面/道路与灯光明暗正常。
-  - `qa/home-tablet.png`（1024×900）与 `qa/home-900.png`（900×1100）：信息栏、profile 事实卡和底部编号在断点处不重叠；900px 时 profile 海报仍保留事实卡网格。
-  - `qa/home-mobile.png`（390×844）：首屏；profile 事实卡单列，`scrollWidth` 与视口一致，海报右侧 WUHAN 角标已隐藏。
-  - `qa/project-desktop.png`（1440×1000）：`?work=little-whale-run` 直接打开 02，主题色、tab、信息栏与 OPEN CASE 正常。
-  - `qa/fallback.png` 与 `qa/fallback-mobile.png`：`?nowebgl=1` 下 6 张卡片网格（00 关于 + 5 件作品），标题不再重叠；390 视口无横向溢出。
+  - `qa/home-desktop.png`（1440×1000）：00 关于海报、GPA 3.9、4 张事实卡、信息栏摘要与“完整简介 ↓”、5 项事实、3 个 chips、6 个 tab、Three.js 车/地面/道路与灯光明暗正常。
+  - `qa/profile-dossier.png`（1440×1000）：滚到 `#profileSheet` 后的完整简介，三段 bio、GPA 高亮、学习经历/科研/证书/爱好故事卡与 note 正常。
+  - `qa/profile-dossier-mobile.png`（390×844）：完整简介在手机上单列排布，bio 与故事卡可读。
+  - `qa/home-tablet.png`（1024×900）与 `qa/home-900.png`（900×1400）：信息栏、profile 事实卡和底部编号在断点处不重叠；900px 时 profile 海报仍保留事实卡网格。
+  - `qa/home-mobile.png`（390×844）：首屏；profile 摘要与“完整简介”入口可见，事实卡单列，`scrollWidth` 与视口一致，海报右侧 WUHAN 角标已隐藏。
+  - `qa/project-desktop.png`（1440×1000）：`?work=shicuo` 直接打开 05，主题色、tab、信息栏与 OPEN CASE 正常。
+  - `qa/fallback.png` 与 `qa/fallback-mobile.png`：`?nowebgl=1` 下 6 张卡片网格（00 关于 + 5 件作品），profile 卡含 bio 三段与 note；标题不再重叠，390 视口无横向溢出。
   - `qa/campus-desktop.png`（1440×1200）与 `qa/campus-mobile.png`（390×844）：详情页 hero 标题按两行排布，封面、meta、BRIEF 正常。
-- 本地 CDP 回归脚本验证：初始 profile、6 tabs、5 项事实、3 个 chips、切到 01、URL 深链、profile CTA 进入第一件、详情页标题/下一件链接、`?work=shicuo`、fallback 6 张卡片均通过。fallback 下调试对象 `window.__portfolio` 不挂载（只影响测试读取，不影响页面）。
+- 本地 CDP 回归脚本验证：初始 profile、6 tabs、5 项事实、3 段 bio、5 张故事卡、3 个 chips、切到 01、URL 深链、profile CTA 进入第一件、详情页标题/下一件链接、`?work=shicuo`、fallback 6 张卡片均通过。fallback 下调试对象 `window.__portfolio` 不挂载（只影响测试读取，不影响页面）。
 - 上述截图覆盖了视觉布局与断点；交互仍建议在真实浏览器里手点一遍。
 
 ### 未覆盖
@@ -306,6 +313,7 @@ window.PORTFOLIO = {
 
 - **校园二手书交易平台**：README 曾写 `https://xiaojinyi1.github.io/campus-book-market/`，但当前该 URL 和 `xiaojinyi1/campus-book-market` 仓库均 404；因此详情页只显示“课程项目 · 未公开部署”，没有放死链。以后部署后把 `live`/`source` 加回 `projects.js` 即可。
 - **线上更新延迟**：Pages workflow 触发后通常需要几十秒；若刚推送后仍看到旧页面，等待 Actions 完成再刷新即可。
+- **个人档案只写已提供信息**：目前没有专业名称、排名/奖学金、科研项目、目标方向、联系方式等；这些字段没有编造，后续补充后再写入 `profile.bio` / `profile.facts`。
 
 ---
 

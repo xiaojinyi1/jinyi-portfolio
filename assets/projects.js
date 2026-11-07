@@ -24,10 +24,10 @@ window.PORTFOLIO = {
     titleCn: "关于我",
     titleEn: "CREATIVE DEVELOPER / STUDENT",
     tagline: "武汉理工大学 · 大二在读",
-    summary: "把想法做成可以走进去的网页，也把每一次练习做成可以拿得出手的作品。",
+    summary: "武汉理工大学大二在读，绩点 3.9；正在用课程项目和个人练习，把想法做成可以访问的页面。",
     year: "2025",
     type: "个人档案 / PROFILE",
-    role: "GPA 3.9 · 武汉理工大学",
+    role: "武汉理工大学 · 大二在读",
     accent: "#E3A45C",
     accentDeep: "#17130E",
     poster: {
@@ -35,13 +35,19 @@ window.PORTFOLIO = {
       foreground: "#F4EBDD",
       stamp: "PROFILE / 00"
     },
+    bio: [
+      "我是 JINYI，武汉理工大学大二在读，目前绩点 3.9。这个作品集把我的个人档案与五件课程/个人项目放在同一块广告牌上，方便按同一个入口了解我和我的作品。",
+      "五件作品分别涉及生成式 3D、Canvas 游戏、网络数据可视化、全栈 CRUD 与数据库设计；它们记录了我目前在 Web 前端、Three.js 场景和 Node/PostgreSQL 上的练习。",
+      "科研经历目前暂无，仍在积累；已通过 Python 二级与 CET-4。课余喜欢追剧和打游戏，作为课程之外的放松方式。"
+    ],
     facts: [
-      { id: "gpa", label: "个人成绩", value: "3.9", detail: "绩点 / GPA", highlight: true },
-      { id: "research", label: "科研成果", value: "暂无", detail: "仍在积累，保持开放" },
-      { id: "certs", label: "能力证书", value: "Python 二级", detail: "CET-4" },
-      { id: "education", label: "学习经历", value: "武汉理工大学", detail: "大二在读" },
-      { id: "interests", label: "爱好", value: "追剧 · 打游戏", detail: "课外的充电时间" }
-    ]
+      { id: "gpa", label: "个人成绩", value: "3.9", detail: "绩点 / GPA", story: "当前绩点 3.9。", highlight: true },
+      { id: "research", label: "科研成果", value: "暂无", detail: "仍在积累，保持开放", story: "目前暂无科研成果，把精力放在课程学习与项目实践上。" },
+      { id: "certs", label: "能力证书", value: "Python 二级", detail: "CET-4", story: "已通过 Python 二级与 CET-4。" },
+      { id: "education", label: "学习经历", value: "武汉理工大学", detail: "大二在读", story: "武汉理工大学，大二在读；课程之外，通过五件作品练习前端、3D 与后端开发。" },
+      { id: "interests", label: "兴趣爱好", value: "追剧 · 打游戏", detail: "课外的充电时间", story: "追剧和打游戏，是我课程之外的放松方式。" }
+    ],
+    profileNote: "以上为目前提供的个人信息；未列出的经历暂未补充。"
   },
   projects: [
     {

@@ -4,3 +4,6 @@ qa-*.mjs
 qa-car.html
 .DS_Store
 Thumbs.db
+.tmp-*
+*.docx
+~$*
