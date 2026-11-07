@@ -29,10 +29,15 @@ jobs:
         with:
           enablement: true
 
+      - name: Stage static site
+        run: |
+          mkdir -p _site
+          cp -R index.html assets work _site/
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy
         id: deployment

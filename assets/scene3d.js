@@ -541,6 +541,7 @@
       state.lampLights.push(lampLight);
     });
     addCar(state.scene);
+    if (window.matchMedia("(max-width: 620px)").matches && state.car) state.car.visible = false;
     addProps(state.scene);
     addDust(state.scene);
 
