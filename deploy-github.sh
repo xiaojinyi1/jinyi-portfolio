@@ -13,9 +13,12 @@ API="https://api.github.com/repos/${OWNER}/${REPO}"
 
 command -v git >/dev/null || { echo "git is required"; exit 1; }
 command -v curl >/dev/null || { echo "curl is required"; exit 1; }
+command -v base64 >/dev/null || { echo "base64 is required"; exit 1; }
 
 cred=$(printf 'protocol=https\nhost=github.com\n\n' | GIT_TERMINAL_PROMPT=0 git credential fill 2>/dev/null || true)
 token=$(printf '%s\n' "$cred" | sed -n 's/^password=//p')
+login=$(printf '%s\n' "$cred" | sed -n 's/^username=//p')
+[ -n "$login" ] || login="$OWNER"
 if [ -z "$token" ]; then
   echo "No cached GitHub credential found. Run: git credential fill (host=github.com) first."
   exit 1
@@ -25,12 +28,22 @@ echo "Checking ${OWNER}/${REPO} ..."
 code=$(curl -sS -o /tmp/jinyi-repo.json -w '%{http_code}' -H "Authorization: Bearer ${token}" "$API")
 if [ "$code" = "404" ]; then
   echo "Creating repository ${OWNER}/${REPO} ..."
-  curl -sS -X POST \
+  payload=$(mktemp)
+  cat > "$payload" <<EOF
+{"name":"${REPO}","description":"JINYI Selected Works / Three.js billboard portfolio","homepage":"https://${OWNER}.github.io/${REPO}/","private":false,"has_issues":true,"has_projects":false,"has_wiki":false}
+EOF
+  create_code=$(curl -sS -o /tmp/jinyi-create.json -w '%{http_code}' -X POST \
     -H "Authorization: Bearer ${token}" \
     -H "Accept: application/vnd.github+json" \
+    -H "Content-Type: application/json" \
     https://api.github.com/user/repos \
-    -d "{\"name\":\"${REPO}\",\"description\":\"JINYI — Selected Works / Three.js billboard portfolio\",\"homepage\":\"https://${OWNER}.github.io/${REPO}/\",\"private\":false,\"has_issues\":true,\"has_projects\":false,\"has_wiki\":false}" \
-    >/tmp/jinyi-create.json
+    -d @"$payload")
+  rm -f "$payload"
+  if [ "$create_code" != "201" ]; then
+    echo "GitHub API returned HTTP ${create_code} while creating the repository."
+    cat /tmp/jinyi-create.json
+    exit 1
+  fi
 elif [ "$code" != "200" ]; then
   echo "GitHub API returned HTTP ${code}; refusing to continue."
   cat /tmp/jinyi-repo.json
@@ -52,12 +65,14 @@ else
 fi
 
 echo "Pushing ${BRANCH} ..."
-git -c http.extraheader="AUTHORIZATION: Bearer ${token}" push -u origin "$BRANCH"
+basic=$(printf '%s:%s' "$login" "$token" | base64 | tr -d '\r\n')
+GIT_TERMINAL_PROMPT=0 git -c http.extraheader="AUTHORIZATION: basic ${basic}" push -u origin "$BRANCH"
 
 echo "Enabling GitHub Pages (Actions build) ..."
 curl -sS -X POST \
   -H "Authorization: Bearer ${token}" \
   -H "Accept: application/vnd.github+json" \
+  -H "Content-Type: application/json" \
   "https://api.github.com/repos/${OWNER}/${REPO}/pages" \
   -d '{"build_type":"workflow"}' >/tmp/jinyi-pages.json || true
 
