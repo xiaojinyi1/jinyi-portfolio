@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="深海夜航中的小鲸鱼、月亮与水母">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#04101E"/>
+      <stop offset=".55" stop-color="#07253A"/>
+      <stop offset="1" stop-color="#0A4350"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#073445"/>
+      <stop offset=".55" stop-color="#031E2C"/>
+      <stop offset="1" stop-color="#010B13"/>
+    </linearGradient>
+    <radialGradient id="moon" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FFF5D4" stop-opacity=".95"/>
+      <stop offset=".5" stop-color="#FFE8A8" stop-opacity=".32"/>
+      <stop offset="1" stop-color="#FFE8A8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="whale" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A93AE"/>
+      <stop offset="1" stop-color="#164C67"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1190" cy="210" r="240" fill="url(#moon)"/>
+  <circle cx="1190" cy="210" r="70" fill="#F7E9BF"/>
+  <g fill="#DDF6FF" opacity=".8">
+    <circle cx="140" cy="130" r="2"/><circle cx="300" cy="90" r="1.5"/><circle cx="470" cy="190" r="2.2"/>
+    <circle cx="620" cy="110" r="1.4"/><circle cx="760" cy="230" r="1.8"/><circle cx="920" cy="90" r="1.3"/>
+    <circle cx="1060" cy="300" r="1.5"/><circle cx="1380" cy="120" r="2"/><circle cx="1470" cy="330" r="1.4"/>
+  </g>
+  <g fill="#0E3C50" opacity=".75">
+    <g transform="translate(180 260)"><ellipse rx="90" ry="30"/><ellipse cx="72" cy="-12" rx="52" ry="22"/></g>
+    <g transform="translate(520 210) scale(.7)"><ellipse rx="100" ry="30"/><ellipse cx="68" cy="-14" rx="54" ry="20"/></g>
+    <g transform="translate(860 300) scale(.55)"><ellipse rx="100" ry="28"/><ellipse cx="-60" cy="-10" rx="50" ry="20"/></g>
+  </g>
+  <path d="M0 520L180 492 360 516 540 484 740 510 930 478 1130 514 1320 486 1470 508 1600 492V620H0Z" fill="#0B3D4F"/>
+  <rect y="596" width="1600" height="304" fill="url(#sea)"/>
+  <g stroke="#7BE4E6" stroke-opacity=".38" fill="none" stroke-width="2.5">
+    <path d="M0 630C180 610 280 648 440 632S760 598 960 628 1300 650 1600 616"/>
+    <path d="M0 700C220 678 340 714 540 696S900 664 1120 696 1420 716 1600 686" opacity=".55"/>
+    <path d="M0 792C240 764 420 802 620 782S980 748 1220 782 1480 806 1600 776" opacity=".3"/>
+  </g>
+  <g transform="translate(880 500)">
+    <path d="M-250 110C-246 36 -168 -4 -40 2 96 8 206 54 226 116 244 178 150 222 34 214-94 206 -254 186 -250 110Z" fill="url(#whale)"/>
+    <path d="M-250 110C-248 168 -160 210 -40 214 70 218 168 190 210 152 140 200 18 204 -76 184-150 168 -204 140 -250 110Z" fill="#CFF5F0" opacity=".75"/>
+    <path d="M-246 108C-330 74 -384 90 -420 130-374 134 -340 150 -318 174-300 142 -274 122 -238 128Z" fill="#1A5268"/>
+    <path d="M-92 142C-140 186 -140 236 -104 264-70 240 -54 202 -58 156Z" fill="#0B3449"/>
+    <path d="M120 60C138 20 170 0 204 6 188 36 176 62 170 90Z" fill="#5AA6B8"/>
+    <circle cx="126" cy="90" r="21" fill="#EAFDFB"/>
+    <circle cx="132" cy="93" r="10" fill="#031720"/>
+    <circle cx="136" cy="89" r="3" fill="#DFFFFF"/>
+    <path d="M168 112C186 120 202 120 218 112" stroke="#031F2B" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <g fill="#8CF7E7" opacity=".85">
+      <circle cx="-24" cy="70" r="3"/><circle cx="8" cy="92" r="2"/><circle cx="46" cy="74" r="2.4"/>
+      <circle cx="-60" cy="102" r="2"/><circle cx="70" cy="112" r="1.7"/>
+    </g>
+  </g>
+  <g opacity=".8">
+    <g transform="translate(360 440)">
+      <path d="M0 0C30 0 44 16 44 34 44 54 24 64 0 64-24 64-44 54-44 34-44 16-30 0 0 0Z" fill="#9FF7F0" opacity=".28"/>
+      <path d="M0 0C28 0 42 16 42 34" stroke="#B9FFF9" stroke-width="3" fill="none" opacity=".8"/>
+      <path d="M-30 34C-36 66-24 92-10 110M0 36C-2 74 6 98 18 116M26 30C30 60 22 88 12 106" stroke="#8FF0EB" stroke-width="2" fill="none" opacity=".45"/>
+    </g>
+    <g transform="translate(1360 390) scale(.7)">
+      <path d="M0 0C30 0 44 16 44 34 44 54 24 64 0 64-24 64-44 54-44 34-44 16-30 0 0 0Z" fill="#9FF7F0" opacity=".22"/>
+      <path d="M-30 34C-36 66-24 92-10 110M0 36C-2 74 6 98 18 116" stroke="#8FF0EB" stroke-width="2" fill="none" opacity=".4"/>
+    </g>
+  </g>
+  <g fill="#B9FFF8" opacity=".5">
+    <circle cx="660" cy="680" r="3"/><circle cx="700" cy="726" r="2"/><circle cx="1060" cy="700" r="2.5"/>
+    <circle cx="1120" cy="760" r="2"/><circle cx="480" cy="790" r="2"/>
+  </g>
+</svg>

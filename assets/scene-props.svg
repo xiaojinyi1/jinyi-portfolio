@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" role="img" aria-label="广告牌前的电缆盘、路锥与旧轮胎">
+  <defs>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6B4B32"/><stop offset="1" stop-color="#2D1F16"/>
+    </linearGradient>
+    <linearGradient id="cone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B84A24"/><stop offset=".5" stop-color="#F07A3E"/><stop offset="1" stop-color="#8F351A"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="300" cy="282" rx="270" ry="16" fill="#000" opacity=".45"/>
+  <g transform="translate(80 140)">
+    <ellipse cx="100" cy="132" rx="92" ry="24" fill="#0C0A09"/>
+    <circle cx="100" cy="80" r="82" fill="url(#wood)"/>
+    <circle cx="100" cy="80" r="62" fill="#1A1310"/>
+    <circle cx="100" cy="80" r="50" fill="#3B2A1E"/>
+    <circle cx="100" cy="80" r="30" fill="#120D0B"/>
+    <circle cx="100" cy="80" r="22" fill="#5A3A26"/>
+    <g stroke="#8F6A48" stroke-width="3" opacity=".5">
+      <path d="M100 0V160"/><path d="M20 80H180"/><path d="M42 22L158 138"/><path d="M158 22L42 138"/>
+    </g>
+    <path d="M26 128L174 128 160 158 40 158Z" fill="#2A1E15"/>
+  </g>
+  <g transform="translate(300 160)">
+    <path d="M34 114L66 18H100L132 114Z" fill="url(#cone)"/>
+    <rect x="52" y="66" width="62" height="16" fill="#F6E6D2" opacity=".9"/>
+    <rect x="20" y="112" width="126" height="18" rx="4" fill="#2E2018"/>
+    <rect x="10" y="128" width="146" height="10" rx="3" fill="#15100D"/>
+    <path d="M66 18H100L104 32H62Z" fill="#F0A06B" opacity=".55"/>
+  </g>
+  <g transform="translate(440 180)">
+    <ellipse cx="60" cy="90" rx="62" ry="16" fill="#000" opacity=".4"/>
+    <circle cx="60" cy="50" r="48" fill="#0A0908"/><circle cx="60" cy="50" r="30" fill="#22201D"/>
+    <circle cx="60" cy="50" r="16" fill="#0A0908"/>
+    <g stroke="#3A3732" stroke-width="2" opacity=".8">
+      <path d="M60 2V18"/><path d="M60 82V98"/><path d="M12 50H28"/><path d="M92 50H108"/>
+      <path d="M26 16L38 28"/><path d="M82 72L94 84"/><path d="M94 16L82 28"/><path d="M38 72L26 84"/>
+    </g>
+  </g>
+</svg>

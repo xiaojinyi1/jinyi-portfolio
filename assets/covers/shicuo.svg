@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="拾错：纸张、墨绿与朱砂的错题卡片">
+  <defs>
+    <pattern id="paper" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#2E4139" stroke-opacity=".055" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#2E4139" flood-opacity=".16"/></filter>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF7"/>
+      <stop offset="1" stop-color="#F6EFDF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#F3EBDD"/>
+  <rect width="1600" height="900" fill="url(#paper)"/>
+  <g stroke="#2E4139" stroke-opacity=".16" fill="none">
+    <path d="M0 150H1600"/><path d="M0 720H1600"/>
+    <path d="M220 0V900"/><path d="M1380 0V900"/>
+  </g>
+  <g transform="rotate(-8 1600 0)">
+    <rect x="1320" y="-80" width="220" height="220" fill="#C8553D" opacity=".92"/>
+  </g>
+  <rect x="1396" y="26" width="120" height="120" fill="#C8553D"/>
+  <rect x="1408" y="38" width="96" height="96" fill="none" stroke="#FFF6E8" stroke-width="2" opacity=".8"/>
+  <text x="1420" y="106" fill="#FFF6E8" font-family="STKaiti, KaiTi, serif" font-size="62" font-weight="700">拾</text>
+  <g transform="translate(170 240)" filter="url(#shadow)">
+    <rect width="760" height="420" rx="8" fill="url(#card)"/>
+    <rect x="38" y="36" width="84" height="30" rx="15" fill="#F5E3DD"/>
+    <text x="57" y="56" fill="#B44936" font-family="Arial, sans-serif" font-size="13" font-weight="700">数学 · 导数</text>
+    <text x="640" y="56" fill="#8C8273" font-family="Consolas, monospace" font-size="12">NO. 014</text>
+    <text x="38" y="132" fill="#1F3A32" font-family="STSong, SimSun, serif" font-size="31" font-weight="700">传送带模型：摩擦力方向</text>
+    <text x="38" y="174" fill="#1F3A32" font-family="STSong, SimSun, serif" font-size="31" font-weight="700">总是和运动方向相反吗？</text>
+    <g stroke="#2E4139" stroke-opacity=".18" stroke-width="5" stroke-linecap="round">
+      <path d="M40 220H560"/><path d="M40 246H684"/><path d="M40 272H500"/>
+    </g>
+    <rect x="38" y="306" width="660" height="74" rx="6" fill="#F6E7E2"/>
+    <text x="56" y="334" fill="#A84533" font-family="Arial, sans-serif" font-size="13" font-weight="700">我的卡点</text>
+    <text x="56" y="360" fill="#5A4A40" font-family="Arial, sans-serif" font-size="14">先找等号成立的条件，再把不等式整体移过去；不是背结论。</text>
+    <g fill="#F2EBDD" stroke="#D8CBB6">
+      <rect x="38" y="392" width="72" height="22" rx="11"/><rect x="120" y="392" width="82" height="22" rx="11"/>
+    </g>
+    <text x="52" y="408" fill="#7A6B5A" font-family="Arial, sans-serif" font-size="11">#导数</text>
+    <text x="134" y="408" fill="#7A6B5A" font-family="Arial, sans-serif" font-size="11">#恒成立</text>
+    <g transform="translate(630 330) rotate(8)">
+      <rect width="112" height="34" rx="3" fill="none" stroke="#C8553D" stroke-width="2" opacity=".8"/>
+      <text x="18" y="23" fill="#C8553D" font-family="STKaiti, KaiTi, serif" font-size="18">已复盘</text>
+    </g>
+  </g>
+  <g transform="translate(740 340) rotate(4)" filter="url(#shadow)" opacity=".94">
+    <rect width="580" height="370" rx="8" fill="url(#card)"/>
+    <rect x="34" y="34" width="74" height="28" rx="14" fill="#E7EFE9"/>
+    <text x="51" y="53" fill="#2E6B55" font-family="Arial, sans-serif" font-size="12" font-weight="700">物理 · 电磁</text>
+    <text x="34" y="116" fill="#1F3A32" font-family="STSong, SimSun, serif" font-size="25" font-weight="700">导体棒切割磁感线，</text>
+    <text x="34" y="152" fill="#1F3A32" font-family="STSong, SimSun, serif" font-size="25" font-weight="700">电流方向怎么判断？</text>
+    <g stroke="#2E4139" stroke-opacity=".16" stroke-width="4" stroke-linecap="round">
+      <path d="M34 196H490"/><path d="M34 220H430"/>
+    </g>
+    <rect x="34" y="258" width="500" height="60" rx="6" fill="#E8F0EA"/>
+    <text x="50" y="283" fill="#2E6B55" font-family="Arial, sans-serif" font-size="12" font-weight="700">复习排期</text>
+    <text x="50" y="305" fill="#4A5A50" font-family="Arial, sans-serif" font-size="14">3 天后 · SM-2 · 四档评分</text>
+  </g>
+  <g transform="translate(1060 130) rotate(-6)">
+    <rect width="300" height="150" rx="8" fill="#2E4139" filter="url(#shadow)"/>
+    <text x="26" y="42" fill="#A9C7B8" font-family="Consolas, monospace" font-size="12" letter-spacing="2">REVIEW STREAK</text>
+    <text x="26" y="100" fill="#F6EFDF" font-family="Arial, sans-serif" font-size="58" font-weight="700">14</text>
+    <text x="100" y="100" fill="#A9C7B8" font-family="Arial, sans-serif" font-size="20">天</text>
+    <text x="26" y="128" fill="#A9C7B8" font-family="Arial, sans-serif" font-size="12">在遗忘之前，再见一次。</text>
+  </g>
+  <g fill="#2E4139" opacity=".4">
+    <circle cx="120" cy="780" r="3"/><circle cx="150" cy="820" r="2"/><circle cx="1490" cy="790" r="3"/>
+    <circle cx="1450" cy="840" r="2"/><circle cx="1180" cy="810" r="2"/>
+  </g>
+</svg>

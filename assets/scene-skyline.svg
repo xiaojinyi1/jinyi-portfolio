@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" role="img" aria-label="远处城市的低多边形剪影">
+  <g fill="#07080D">
+    <path d="M0 420V300H60V250H110V300H150V210H200V160H240V210H290V280H340V230H390V180H430V120H450V180H500V250H550V200H610V150H650V200H700V280H740V240H790V300H840V220H880V160H920V90H940V160H980V240H1030V280H1080V210H1130V150H1170V210H1220V300H1270V240H1320V180H1360V240H1400V300H1450V220H1490V260H1540V200H1600V420Z"/>
+    <path d="M0 420V350H90V320H170V360H260V330H350V370H450V340H560V380H680V350H800V390H930V360H1060V390H1180V350H1300V380H1420V340H1520V370H1600V420Z" opacity=".9"/>
+  </g>
+  <g fill="#FFCE8A" opacity=".55">
+    <rect x="162" y="228" width="5" height="8"/><rect x="180" y="252" width="5" height="8"/><rect x="412" y="190" width="5" height="8"/>
+    <rect x="460" y="206" width="5" height="8"/><rect x="622" y="220" width="5" height="8"/><rect x="860" y="200" width="5" height="8"/>
+    <rect x="900" y="150" width="5" height="8"/><rect x="952" y="230" width="5" height="8"/><rect x="1140" y="220" width="5" height="8"/>
+    <rect x="1330" y="240" width="5" height="8"/><rect x="1482" y="276" width="5" height="8"/>
+  </g>
+  <g stroke="#07080D" stroke-width="5" fill="none">
+    <path d="M450 120V60H444V52H456V60H450"/><path d="M920 90V30H914V22H926V30H920"/>
+    <path d="M1270 300V260H1262V300"/><path d="M740 280V245H732V280"/>
+  </g>
+  <g fill="#07080D">
+    <path d="M250 160L270 140 290 160Z"/><path d="M1010 280L1040 250 1070 280Z"/>
+  </g>
+</svg>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="拾错数据库设计：五组表与外键关系">
+  <defs>
+    <pattern id="paper" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#2E4139" stroke-opacity=".06" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#2E4139" flood-opacity=".12"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F6EEE0"/>
+  <rect width="1600" height="900" fill="url(#paper)"/>
+  <g font-family="Arial, sans-serif">
+    <text x="80" y="80" fill="#C8553D" font-family="Consolas, monospace" font-size="14" letter-spacing="3">DATABASE DESIGN / SUPABASE · POSTGRESQL</text>
+    <text x="80" y="142" fill="#1F3A32" font-family="STSong, SimSun, serif" font-size="48" font-weight="700">先画关系，再写页面。</text>
+    <text x="80" y="178" fill="#6E6252" font-size="14">15 张业务表 · 8 个枚举 · 30+ 条 RLS · 2 个 RPC · 1 个读模型视图</text>
+    <line x1="80" y1="212" x2="1520" y2="212" stroke="#2E4139" stroke-opacity=".22"/>
+  </g>
+  <g font-family="Consolas, monospace" font-size="12" fill="#8C8273">
+    <text x="80" y="248">AUTH.USERS</text>
+    <rect x="80" y="262" width="180" height="48" rx="5" fill="#FFFDF7" stroke="#2E4139" stroke-opacity=".28"/>
+    <text x="96" y="292" fill="#1F3A32" font-size="14">auth.users</text>
+    <path d="M160 310V350" stroke="#2E4139" stroke-opacity=".4"/>
+    <path d="M160 350H300" stroke="#2E4139" stroke-opacity=".4"/>
+    <path d="M300 350V390" stroke="#2E4139" stroke-opacity=".4"/>
+  </g>
+  <g filter="url(#shadow)">
+    <g transform="translate(80 390)">
+      <rect width="220" height="220" rx="8" fill="#FFFDF7" stroke="#2E4139" stroke-opacity=".2"/>
+      <rect width="220" height="42" rx="8" fill="#2E4139"/><rect y="30" width="220" height="12" fill="#2E4139"/>
+      <text x="16" y="27" fill="#F6EEE0" font-family="Arial, sans-serif" font-size="14" font-weight="700">身份 / profiles</text>
+      <g font-family="Consolas, monospace" font-size="12" fill="#5A5044">
+        <text x="16" y="70">id → auth.users.id</text><text x="16" y="98">username</text><text x="16" y="126">role</text>
+        <text x="16" y="154">visibility_prefs</text><text x="16" y="182">created_at</text>
+      </g>
+      <text x="16" y="206" fill="#C8553D" font-family="Arial, sans-serif" font-size="11">1 : 1 认证 ↔ 资料</text>
+    </g>
+    <g transform="translate(340 300)">
+      <rect width="250" height="300" rx="8" fill="#FFFDF7" stroke="#2E4139" stroke-opacity=".2"/>
+      <rect width="250" height="42" rx="8" fill="#2E4139"/><rect y="30" width="250" height="12" fill="#2E4139"/>
+      <text x="16" y="27" fill="#F6EEE0" font-family="Arial, sans-serif" font-size="14" font-weight="700">内容 / mistakes</text>
+      <g font-family="Consolas, monospace" font-size="12" fill="#5A5044">
+        <text x="16" y="70">id</text><text x="16" y="98">owner_id → profiles</text><text x="16" y="126">notebook_id</text>
+        <text x="16" y="154">visibility (enum)</text><text x="16" y="182">status (enum)</text>
+        <text x="16" y="210">difficulty</text><text x="16" y="238">subject_id</text>
+        <text x="16" y="266">original_mistake_id</text>
+      </g>
+      <text x="16" y="286" fill="#C8553D" font-family="Arial, sans-serif" font-size="11">可见性 ≠ 生命周期</text>
+    </g>
+    <g transform="translate(630 270)">
+      <rect width="250" height="350" rx="8" fill="#FFFDF7" stroke="#2E4139" stroke-opacity=".2"/>
+      <rect width="250" height="42" rx="8" fill="#2E4139"/><rect y="30" width="250" height="12" fill="#2E4139"/>
+      <text x="16" y="27" fill="#F6EEE0" font-family="Arial, sans-serif" font-size="14" font-weight="700">组织 / notebooks</text>
+      <g font-family="Consolas, monospace" font-size="12" fill="#5A5044">
+        <text x="16" y="70">id</text><text x="16" y="98">owner_id → profiles</text><text x="16" y="126">title</text>
+        <text x="16" y="154">color</text><text x="16" y="182">is_public</text><text x="16" y="210">is_default</text>
+        <text x="16" y="238">notebook_items</text><text x="16" y="266">favorites</text><text x="16" y="294">likes</text>
+      </g>
+      <text x="16" y="330" fill="#C8553D" font-family="Arial, sans-serif" font-size="11">部分唯一索引：一人一本默认本</text>
+    </g>
+    <g transform="translate(920 240)">
+      <rect width="250" height="390" rx="8" fill="#FFFDF7" stroke="#2E4139" stroke-opacity=".2"/>
+      <rect width="250" height="42" rx="8" fill="#2E4139"/><rect y="30" width="250" height="12" fill="#2E4139"/>
+      <text x="16" y="27" fill="#F6EEE0" font-family="Arial, sans-serif" font-size="14" font-weight="700">学习 / review_*</text>
+      <g font-family="Consolas, monospace" font-size="12" fill="#5A5044">
+        <text x="16" y="70">review_schedules</text><text x="16" y="98">  due_at</text><text x="16" y="126">  interval_days</text>
+        <text x="16" y="154">  ease_factor</text><text x="16" y="182">review_logs</text><text x="16" y="210">  rating 0–3</text>
+        <text x="16" y="238">  reviewed_at</text><text x="16" y="266">  next_due_at</text>
+      </g>
+      <text x="16" y="300" fill="#C8553D" font-family="Arial, sans-serif" font-size="11">当前排期 / 历史事件分开</text>
+      <text x="16" y="330" fill="#8C8273" font-family="Arial, sans-serif" font-size="11">SM-2 · 四档评分 · 到期提醒</text>
+      <text x="16" y="360" fill="#2E6B55" font-family="Arial, sans-serif" font-size="11">review_mistake() RPC</text>
+    </g>
+    <g transform="translate(1210 300)">
+      <rect width="280" height="300" rx="8" fill="#FFFDF7" stroke="#2E4139" stroke-opacity=".2"/>
+      <rect width="280" height="42" rx="8" fill="#2E4139"/><rect y="30" width="280" height="12" fill="#2E4139"/>
+      <text x="16" y="27" fill="#F6EEE0" font-family="Arial, sans-serif" font-size="14" font-weight="700">治理 / notifications</text>
+      <g font-family="Consolas, monospace" font-size="12" fill="#5A5044">
+        <text x="16" y="70">notifications</text><text x="16" y="98">reports</text><text x="16" y="126">  target_id × 3</text>
+        <text x="16" y="154">  num_nonnulls = 1</text><text x="16" y="182">admin_audit_logs</text>
+        <text x="16" y="210">  actor_id</text><text x="16" y="238">  action</text>
+      </g>
+      <text x="16" y="274" fill="#C8553D" font-family="Arial, sans-serif" font-size="11">举报必须且只能指向一个对象</text>
+    </g>
+  </g>
+  <g stroke="#2E4139" stroke-opacity=".35" fill="none" stroke-width="1.5" stroke-dasharray="4 5">
+    <path d="M300 450H340"/><path d="M590 450H630"/><path d="M880 450H920"/><path d="M1170 450H1210"/>
+  </g>
+  <g fill="#2E4139">
+    <path d="M336 450l-12 -6v12Z"/><path d="M626 450l-12 -6v12Z"/><path d="M916 450l-12 -6v12Z"/><path d="M1206 450l-12 -6v12Z"/>
+  </g>
+  <g font-family="Consolas, monospace" font-size="12" fill="#2E6B55">
+    <text x="80" y="700">RLS: 页面守卫负责体验，数据库策略负责底线。</text>
+    <text x="80" y="728" fill="#8C8273">页面可以绕过，PostgREST 不能。</text>
+  </g>
+  <g transform="translate(1130 660)">
+    <rect width="360" height="140" rx="8" fill="#2E4139"/>
+    <text x="20" y="34" fill="#A9C7B8" font-family="Consolas, monospace" font-size="11" letter-spacing="2">READ MODEL</text>
+    <text x="20" y="68" fill="#F6EEE0" font-family="Arial, sans-serif" font-size="18" font-weight="700">mistake_feed</text>
+    <text x="20" y="96" fill="#A9C7B8" font-family="Arial, sans-serif" font-size="12">security_invoker = true</text>
+    <text x="20" y="120" fill="#A9C7B8" font-family="Arial, sans-serif" font-size="12">公开广场 / 搜索 / 排序</text>
+  </g>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="低多边形网络迷宫中的 Packet Orb">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#08071A"/>
+      <stop offset=".45" stop-color="#141033"/>
+      <stop offset=".7" stop-color="#2A173B"/>
+      <stop offset="1" stop-color="#3B1E38"/>
+    </linearGradient>
+    <radialGradient id="orb" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#D8FFF8"/>
+      <stop offset=".28" stop-color="#6FF7E8"/>
+      <stop offset=".62" stop-color="#1CCFCB" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#1CCFCB" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#302B39"/>
+      <stop offset=".55" stop-color="#211F28"/>
+      <stop offset="1" stop-color="#141317"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#6FF7E8" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#6FF7E8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1240" cy="210" r="160" fill="#FF8C5A" opacity=".08"/>
+  <g fill="#F1E6FF" opacity=".55">
+    <circle cx="120" cy="130" r="1.4"/><circle cx="350" cy="90" r="1"/><circle cx="560" cy="190" r="1.6"/>
+    <circle cx="900" cy="80" r="1.2"/><circle cx="1120" cy="160" r="1.4"/><circle cx="1460" cy="110" r="1"/>
+  </g>
+  <g fill="#2A2038">
+    <path d="M0 360L92 330 160 390 250 360 330 430 410 400 480 470 0 470Z"/>
+    <path d="M1600 350L1510 318 1430 382 1340 352 1250 420 1170 392 1100 470 1600 470Z"/>
+  </g>
+  <g fill="#5C3D46">
+    <path d="M0 470L120 430 190 470 300 436 380 470 0 470Z" opacity=".65"/>
+    <path d="M1600 470L1470 428 1390 470 1280 438 1200 470 1600 470Z" opacity=".55"/>
+  </g>
+  <g>
+    <path d="M0 900L620 470H700L1600 900Z" fill="#0B0A10"/>
+    <path d="M60 900L650 470H705L1530 900Z" fill="url(#road)"/>
+    <path d="M60 900L650 470H670L130 900Z" fill="#FF6A2E" opacity=".85"/>
+    <path d="M1530 900L705 470H728L1460 900Z" fill="#FF6A2E" opacity=".75"/>
+    <path d="M790 470H810L850 900H750Z" fill="#FFB27A" opacity=".18"/>
+    <path d="M798 500H802L806 900H794Z" fill="#FFD3A6" opacity=".25"/>
+  </g>
+  <g fill="#3B2845">
+    <path d="M240 470L240 300 310 270 380 300 380 470Z"/>
+    <path d="M420 470L420 350 480 326 540 350 540 470Z"/>
+    <path d="M1120 470L1120 322 1190 292 1260 322 1260 470Z"/>
+    <path d="M1280 470L1280 362 1340 340 1400 362 1400 470Z"/>
+    <path d="M1360 470L1360 410 1410 394 1460 410 1460 470Z"/>
+  </g>
+  <g fill="#6A4552" opacity=".55">
+    <path d="M260 470L260 330 310 306 360 330 360 470Z"/>
+    <path d="M1140 470L1140 350 1190 328 1240 350 1240 470Z"/>
+  </g>
+  <g fill="#FFD9A0" opacity=".8">
+    <rect x="284" y="350" width="7" height="12"/><rect x="316" y="386" width="7" height="12"/><rect x="1164" y="374" width="7" height="12"/>
+    <rect x="1210" y="410" width="7" height="12"/><rect x="1320" y="392" width="6" height="10"/>
+  </g>
+  <g fill="#7A5360" opacity=".8">
+    <path d="M0 470L90 430 180 470Z"/><path d="M1420 470L1510 430 1600 470Z"/>
+  </g>
+  <g transform="translate(800 610)">
+    <ellipse rx="170" ry="56" fill="url(#orb)" opacity=".65"/>
+    <circle r="64" fill="url(#orb)"/>
+    <circle r="34" fill="#B6FFF7" opacity=".9"/>
+    <circle r="17" fill="#F3FFFD"/>
+    <path d="M0 0V260" stroke="url(#beam)" stroke-width="18" opacity=".7"/>
+    <path d="M0 60V260" stroke="#8BFFF1" stroke-width="3" opacity=".55"/>
+  </g>
+  <g fill="#FF8A4C" opacity=".65">
+    <path d="M280 700L300 690 320 700 300 710Z"/><path d="M1230 730L1250 720 1270 730 1250 740Z"/>
+  </g>
+  <g fill="#05040A" opacity=".85">
+    <path d="M0 840L230 800 460 846 700 812 930 856 1180 816 1400 850 1600 826V900H0Z"/>
+  </g>
+</svg>

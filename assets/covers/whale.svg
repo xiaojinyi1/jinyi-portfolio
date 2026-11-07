@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="白昼海面上的小鲸鱼">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B9EAF4"/>
+      <stop offset=".5" stop-color="#E7F8F6"/>
+      <stop offset=".72" stop-color="#9EDCE3"/>
+      <stop offset="1" stop-color="#5AB9C9"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B8FA6"/>
+      <stop offset=".45" stop-color="#0C627B"/>
+      <stop offset="1" stop-color="#042D42"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FFF4C9" stop-opacity=".95"/>
+      <stop offset=".5" stop-color="#FFE18B" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#FFE18B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="whale" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2D6C8A"/>
+      <stop offset="1" stop-color="#123B55"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1210" cy="210" r="210" fill="url(#sun)"/>
+  <circle cx="1210" cy="210" r="76" fill="#FFD873"/>
+  <g fill="#FFFFFF" opacity=".78">
+    <g transform="translate(150 250)">
+      <ellipse cx="0" cy="0" rx="92" ry="38"/><ellipse cx="76" cy="-18" rx="58" ry="30"/><ellipse cx="-70" cy="10" rx="54" ry="24"/>
+    </g>
+    <g transform="translate(520 190) scale(.7)">
+      <ellipse cx="0" cy="0" rx="86" ry="34"/><ellipse cx="66" cy="-14" rx="50" ry="24"/>
+    </g>
+    <g transform="translate(930 330) scale(.56)">
+      <ellipse cx="0" cy="0" rx="96" ry="36"/><ellipse cx="64" cy="-18" rx="56" ry="26"/><ellipse cx="-72" cy="12" rx="48" ry="20"/>
+    </g>
+  </g>
+  <path d="M0 536L180 500 360 526 540 492 740 518 930 486 1130 522 1320 492 1470 514 1600 498V640H0Z" fill="#7AC7CF"/>
+  <path d="M0 566L220 540 430 562 640 532 860 558 1080 530 1300 560 1600 536V650H0Z" fill="#55AEBE" opacity=".72"/>
+  <rect y="610" width="1600" height="290" fill="url(#sea)"/>
+  <g stroke="#CFF7F4" stroke-opacity=".55" fill="none" stroke-width="3">
+    <path d="M0 640C180 620 280 658 440 642S760 608 960 638 1300 660 1600 626"/>
+    <path d="M0 704C220 682 340 718 540 700S900 668 1120 700 1420 720 1600 690" opacity=".6"/>
+    <path d="M0 786C240 758 420 796 620 776S980 742 1220 776 1480 800 1600 770" opacity=".4"/>
+  </g>
+  <g stroke="#A6EEF0" stroke-opacity=".25" fill="none">
+    <path d="M120 660L320 900"/><path d="M430 650L650 900"/><path d="M900 650L1120 900"/><path d="M1240 640L1460 900"/>
+  </g>
+  <g transform="translate(900 520)">
+    <path d="M-250 110C-246 36 -168 -4 -40 2 96 8 206 54 226 116 244 178 150 222 34 214-94 206 -254 186 -250 110Z" fill="url(#whale)"/>
+    <path d="M-250 110C-248 168 -160 210 -40 214 70 218 168 190 210 152 140 200 18 204 -76 184-150 168 -204 140 -250 110Z" fill="#E8F8F5" opacity=".92"/>
+    <path d="M-246 108C-330 74 -384 90 -420 130-374 134 -340 150 -318 174-300 142 -274 122 -238 128Z" fill="#1A4A63"/>
+    <path d="M-92 142C-140 186 -140 236 -104 264-70 240 -54 202 -58 156Z" fill="#0E334C"/>
+    <path d="M120 60C138 20 170 0 204 6 188 36 176 62 170 90Z" fill="#3D8BA4"/>
+    <circle cx="126" cy="90" r="21" fill="#F7FCFB"/>
+    <circle cx="132" cy="93" r="10" fill="#08202E"/>
+    <circle cx="136" cy="89" r="3" fill="#FFFFFF"/>
+    <path d="M168 112C186 120 202 120 218 112" stroke="#0A2B3C" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <ellipse cx="40" cy="76" rx="9" ry="5" fill="#7CC4D2" opacity=".55"/>
+  </g>
+  <g fill="#D8FBFA" opacity=".8">
+    <circle cx="720" cy="660" r="5"/><circle cx="758" cy="646" r="3"/><circle cx="795" cy="672" r="4"/>
+    <circle cx="680" cy="700" r="3"/><circle cx="860" cy="700" r="2.5"/>
+  </g>
+  <g stroke="#E9FFFF" stroke-opacity=".5" fill="none" stroke-width="2">
+    <path d="M560 780C680 760 760 792 880 774"/><path d="M980 812C1080 796 1180 820 1300 800"/>
+  </g>
+</svg>
