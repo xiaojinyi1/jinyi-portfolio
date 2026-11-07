@@ -8,15 +8,40 @@ window.PORTFOLIO = {
     intro: "把想法做成可以走进去的网页。",
     github: "https://github.com/xiaojinyi1",
     title: "JINYI — Selected Works",
-    description: "五件作品，一块广告牌。夜间 Drive-in 里的个人作品集。",
+    description: "一份个人档案，五件作品，一块广告牌。夜间 Drive-in 里的个人作品集。",
     year: "2025"
   },
   settings: {
-    initial: "one-sentence-one-city",
+    initial: "profile",
     clickScreen: "open",
     transition: { mode: "roll", duration: 720 },
     cameraDrift: true,
     bulbChase: true
+  },
+  profile: {
+    slug: "profile",
+    title: "JINYI",
+    titleCn: "关于我",
+    titleEn: "CREATIVE DEVELOPER / STUDENT",
+    tagline: "武汉理工大学 · 大二在读",
+    summary: "把想法做成可以走进去的网页，也把每一次练习做成可以拿得出手的作品。",
+    year: "2025",
+    type: "个人档案 / PROFILE",
+    role: "GPA 3.9 · 武汉理工大学",
+    accent: "#E3A45C",
+    accentDeep: "#17130E",
+    poster: {
+      background: "#17130E",
+      foreground: "#F4EBDD",
+      stamp: "PROFILE / 00"
+    },
+    facts: [
+      { id: "gpa", label: "个人成绩", value: "3.9", detail: "绩点 / GPA", highlight: true },
+      { id: "research", label: "科研成果", value: "暂无", detail: "仍在积累，保持开放" },
+      { id: "certs", label: "能力证书", value: "Python 二级", detail: "CET-4" },
+      { id: "education", label: "学习经历", value: "武汉理工大学", detail: "大二在读" },
+      { id: "interests", label: "爱好", value: "追剧 · 打游戏", detail: "课外的充电时间" }
+    ]
   },
   projects: [
     {

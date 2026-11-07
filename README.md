@@ -1,7 +1,8 @@
 # JINYI — Selected Works
 
-五件作品，一块广告牌。一个夜间 Drive-in 风格的个人作品集：单块 3D 广告牌轮流放映作品，点进去是独立案例页。
+一份个人档案，五件作品，一块广告牌。一个夜间 Drive-in 风格的个人作品集：单块 3D 广告牌轮流放映作品，点进去是独立案例页。
 
+- **00 关于**：起始区块展示个人成绩（GPA 3.9）、科研成果、能力证书、学习经历与爱好；它不是详情页，而是广告牌的第一屏。
 - **无构建步骤**：不需要 npm，也没有 CDN、外部字体或远程图片；Three.js 0.160 以本地 `assets/vendor/three.min.js` 引入。
 - **可直接打开**：双击 `index.html` 就能浏览；也可以放到任意静态托管。
 - **5 个作品**：一句话一座城、小鲸鱼快跑、Packet Orb、校园二手书交易平台、拾错。
@@ -43,6 +44,8 @@ npx serve .
 目标仓库：`https://github.com/xiaojinyi1/jinyi-portfolio`  
 目标站点：`https://xiaojinyi1.github.io/jinyi-portfolio/`
 
+> 当前状态：本地站点、Three.js 场景和 Pages workflow 已完成；远程仓库尚未创建/推送（代理环境的远程上传受 CC Safety Net 限制）。在 Git Bash 运行 `bash deploy-github.sh`，或按下面步骤手动创建空仓库并推送即可上线。
+
 1. 在 GitHub 新建一个空仓库 `jinyi-portfolio`（不要勾选 README / .gitignore）。
 2. 也可以直接在 Git Bash 运行仓库内的一键脚本（脚本会用已保存的 GitHub 凭据创建仓库、推送并尝试启用 Pages）：
 
@@ -75,6 +78,7 @@ npx serve .
 
 | # | 作品 | 类型 | 详情页 | 线上 / 源码 |
 | --- | --- | --- | --- | --- |
+| 00 | 关于 JINYI | 个人档案 | 无（广告牌首屏） | — |
 | 01 | 一句话，一座城 | 生成式 3D / 互动叙事 | `work/one-sentence-one-city.html` | [Live](https://xiaojinyi1.github.io/one-sentence-one-city/) / [Source](https://github.com/xiaojinyi1/one-sentence-one-city) |
 | 02 | 小鲸鱼快跑 | 游戏 / Canvas 2D | `work/little-whale-run.html` | [Live](https://little-whale-run.vercel.app) / [Source](https://github.com/xiaojinyi1/little-whale-run) |
 | 03 | Packet Orb | 实验性 3D / 数据可视化 | `work/packet-orb.html` | [Live](https://xiaojinyi1.github.io/-packet-orb/) / [Source](https://github.com/xiaojinyi1/-packet-orb) |
@@ -83,11 +87,12 @@ npx serve .
 
 ### 导航逻辑
 
-- 主页点击广告牌屏幕 → 当前作品详情页（`settings.clickScreen` 默认 `"open"`）。
-- 主页底部编号、左右箭头、拖拽、滚轮、键盘 ←/→、Home/End、数字 1–5 都只切换广告牌，不跳页。
+- 首次打开停在 `00 关于`；`VIEW WORKS`、点击屏幕或 Enter 会进入第 01 件作品。
+- 主页点击广告牌屏幕 → 当前作品详情页（`settings.clickScreen` 默认 `"open"`）；在 profile 上则先进入第一件作品。
+- 主页底部编号、左右箭头、拖拽、滚轮、键盘 ←/→、Home/End、数字 0–5 都只切换广告牌，不跳页。
 - 详情页左上角 `BACK TO BILLBOARD` 返回 `index.html?work=<slug>`，回来时仍停在同一个作品。
 - 详情页底部 `NEXT CASE` 按 01→02→03→04→05→01 循环；每个详情页都有上一页/下一页的语义位置。
-- 深链：`index.html?work=shicuo` 直接打开第 05 个作品；详情页返回链接也使用这个参数。
+- 深链：`index.html?work=shicuo` 直接打开第 05 个作品；`index.html?work=profile` 回到 00；详情页返回链接也使用这个参数。
 
 ---
 
@@ -95,15 +100,15 @@ npx serve .
 
 | 输入 | 行为 |
 | --- | --- |
-| 鼠标悬停广告牌 | 出现 `OPEN CASE` 指针标签；广告牌保持可点击状态 |
-| 点击屏幕 / 广告牌 | 打开当前作品详情页 |
+| 鼠标悬停广告牌 | 出现 `OPEN CASE` / `START` 指针标签；广告牌保持可点击状态 |
+| 点击屏幕 / 广告牌 | 打开当前作品详情页；在 `00 关于` 上进入第一件作品 |
 | 点击左右箭头 / 底部编号 | 上一件 / 下一件 / 跳到指定作品 |
 | 拖拽屏幕（水平） | 超过 38px 切换作品；拖拽后不会误触打开详情 |
 | 鼠标滚轮 | 在舞台区域上下滚动切换作品（约 520ms 节流） |
 | 键盘 ← → / ↑ ↓ | 上一件 / 下一件 |
-| 键盘 Home / End | 第一件 / 最后一件 |
-| 键盘 1–5 | 直接跳到对应作品 |
-| 键盘 Enter / Space | 屏幕获得焦点时打开当前作品 |
+| 键盘 Home / End | 00 关于 / 最后一件作品 |
+| 键盘 0 / 1–5 | 0 回到 00 关于；1–5 跳到对应作品 |
+| 键盘 Enter / Space | 屏幕获得焦点时打开当前作品；在 00 关于上进入第一件作品 |
 | 触屏左右滑动 | 切换作品；点击进入详情 |
 
 过渡模式由 `settings.transition` 控制：
@@ -128,11 +133,12 @@ transition: { mode: "roll", duration: 720 }
 window.PORTFOLIO = {
   site: { name, role, location, intro, github, title, description, year },
   settings: { initial, clickScreen, transition, cameraDrift, bulbChase },
+  profile: { slug, title, tagline, facts: [ /* 5 项 */ ], ... },
   projects: [ /* 5 个项目 */ ]
 };
 ```
 
-这个文件是 classic script，主页和详情页都直接读取它，不需要请求 JSON。改文案、换封面、加作品只改这一处（以及新增 `work/<slug>.html` 壳页）。
+这个文件是 classic script，主页和详情页都直接读取它，不需要请求 JSON。改文案、换封面、加作品只改这一处（以及新增 `work/<slug>.html` 壳页）。`profile` 与 `projects` 分开：profile 只出现在主页/fallback，不生成详情页；`settings.initial` 默认是 `"profile"`。
 
 ### 项目字段
 
@@ -153,6 +159,17 @@ window.PORTFOLIO = {
 | `accent` / `accentDeep` | 当前作品主题色与深色底 |
 | `poster` | `{layout,imageSide,background,foreground,stamp}`，海报双布局 |
 
+### Profile 字段
+
+| 字段 | 用途 |
+| --- | --- |
+| `slug` / `title` / `titleCn` / `titleEn` | 00 关于的标识与标题 |
+| `tagline` | 学校 / 年级等一句话介绍 |
+| `summary` | 信息栏简介与 fallback 说明 |
+| `facts[5]` | `{label,value,detail,highlight}`，信息栏与 fallback 的事实卡；`highlight` 用于 GPA 跨列高亮 |
+| `poster` | 广告牌 profile 海报配色/角标；无需 cover |
+| `accent` / `accentDeep` | 00 关于的主题色 |
+
 ### 封面与素材
 
 `assets/covers/` 下有 11 张 1600×900 SVG，全部为本站重绘的矢量封面/画廊图：
@@ -170,7 +187,7 @@ window.PORTFOLIO = {
 1. 在 `assets/covers/` 放一张 SVG/图片（建议 1600×900）。
 2. 在 `projects.js` 的 `projects` 数组里加一项，复制现有项目字段并改内容。
 3. 复制任意 `work/*.html` 为 `work/<新 slug>.html`，把 `<body data-work="...">` 改成新 slug；页面里的 `backIndex` 只是静态占位，运行时会更新。
-4. 起始作品可改 `settings.initial`；底部编号和 `INDEX xx / 05` 会自动按数组长度生成。
+4. 起始作品可改 `settings.initial`；底部编号和 `INDEX xx / 05` 会自动按数组长度生成。`profile` 是第 00 项，新增作品从 01 开始计数，不需要改 `INDEX` 文案。
 
 ---
 
@@ -183,7 +200,7 @@ window.PORTFOLIO = {
 ├─ .github/workflows/pages.yml # GitHub Pages 自动部署
 ├─ qa/                        # 1440 / 1024 / 390 验收截图
 ├─ assets/
-│  ├─ projects.js             # 唯一数据源
+│  ├─ projects.js             # 唯一数据源（profile + 5 个项目）
 │  ├─ main.js                 # 主页：海报、切换、拖拽、URL、Three.js 初始化
 │  ├─ scene3d.js              # Three.js：地面、道路、车、灯光、尘埃
 │  ├─ detail.js               # 详情页渲染器（5 页共用）
@@ -217,13 +234,13 @@ window.PORTFOLIO = {
 
 - 桌面：`> 900px` 保持一屏舞台，信息栏在左下，广告牌在右侧，避免互相遮挡。
 - 平板：广告牌宽度同时受 `60vw` 与 `88svh` 约束，短屏也不会顶出画面。
-- `≤ 900px`：广告牌居中，信息栏移到舞台下方；广告牌宽度 `min(92vw, 72svh, 760px)`，保证上下都在舞台内。
-- `≤ 620px`：隐藏车/道具/钢腿，压缩海报字号与页脚，底部编号只保留数字；广告牌仍完整可见。
+- `≤ 900px`：广告牌居中，信息栏移到舞台下方；广告牌宽度 `min(92vw, 72svh, 760px)`，保证上下都在舞台内。profile 事实卡改为两列。
+- `≤ 620px`：隐藏车/道具/钢腿，压缩海报字号与页脚，底部编号只保留数字；profile 事实卡改为单列，广告牌仍完整可见。
 - 详情页：`1080px` / `720px` 两档断点，hero 双栏在窄屏堆叠，画廊单列。
 - `prefers-reduced-motion`：关闭漂移/闪烁，过渡改 120ms fade。
-- 键盘：主页 ↑↓←→/Home/End/1–5/Enter/Space；详情页是普通文档流，使用 Tab 访问链接。
-- 无 JS：主页显示静态的 5 条作品链接；详情页 `<noscript>` 给出作品摘要和可用的 Live/Source。
-- 3D 不可用：`?nowebgl=1` 或 `?fallback=1` 显示同样的 5 张卡片网格，不黑屏。
+- 键盘：主页 ↑↓←→/Home/End/0–5/Enter/Space；详情页是普通文档流，使用 Tab 访问链接。
+- 无 JS：主页显示静态的 6 条入口（00 关于 + 5 件作品）；详情页 `<noscript>` 给出作品摘要和可用的 Live/Source。
+- 3D 不可用：`?nowebgl=1` 或 `?fallback=1` 显示同样的 6 张卡片网格（00 关于 + 5 件作品），不黑屏。
 
 ---
 
@@ -260,21 +277,23 @@ window.PORTFOLIO = {
 
 ### 已做的静态检查
 
-- 5 个项目、5 个 `work/*.html`，`data-work` 与 `slug` 一一对应。
+- 6 个主页条目（00 关于 + 5 个项目）、5 个 `work/*.html`，`data-work` 与项目 `slug` 一一对应。
 - 11 张 cover/gallery SVG 全部存在，且都是 1600×900；数据中的 `cover`/`gallery.src` 都能解析到文件。
 - 主页与 5 个详情页的 CSS/JS 引用路径正确；详情页图片通过 `../assets/` 解析，不会出现 `work/assets/...` 断图。
 - 主页 `index.html` 在 1440 / 1180 / 1024 / 901 宽度下，信息栏与广告牌不水平重叠；900 / 620 / 390 下广告牌宽度受 `svh` 约束，不再被舞台裁切。
-- 广告牌双层的 `z-index`、`touch-action`、重复 Enter 处理已修正。
+- 广告牌双层的 `z-index`、`touch-action`、重复 Enter 处理已修正；profile 的 5 项事实、3 个 chips、6 个 tab 均与数据一致。
 - 没有外部 `src`/`url()`；所有本地资源都用相对路径。
 
 ### 已做的浏览器检查
 
 - 用 Chrome headless 以 `--allow-file-access-from-files` 直接打开 `file://`，WebGL 通过 `--enable-unsafe-swiftshader --use-angle=swiftshader` 渲染：
-  - `qa/three-home.png`（1440×1000）：单块广告牌、5 个 tab、信息栏、Three.js 车/地面/道路与灯光明暗正常；顶部 `PROJECTS / 05 SELECTED WORKS` 与底部 `NOW SHOWING` 间距正常。
-  - `qa/three-mobile.png`（CDP 390×844）：`innerWidth=390`、`scrollWidth=390`；广告牌、箭头、信息栏与编号不重叠。
-  - `qa/fallback.png`：`?nowebgl=1` 下 5 张卡片网格正常，标题不再重叠。
+  - `qa/home-desktop.png`（1440×1000）：00 关于海报、GPA 3.9、4 张事实卡、信息栏 5 项事实、6 个 tab、Three.js 车/地面/道路与灯光明暗正常。
+  - `qa/home-tablet.png`（1024×900）与 `qa/home-900.png`（900×1100）：信息栏、profile 事实卡和底部编号在断点处不重叠；900px 时 profile 海报仍保留事实卡网格。
+  - `qa/home-mobile.png`（390×844）：首屏；profile 事实卡单列，`scrollWidth` 与视口一致，海报右侧 WUHAN 角标已隐藏。
+  - `qa/project-desktop.png`（1440×1000）：`?work=little-whale-run` 直接打开 02，主题色、tab、信息栏与 OPEN CASE 正常。
+  - `qa/fallback.png` 与 `qa/fallback-mobile.png`：`?nowebgl=1` 下 6 张卡片网格（00 关于 + 5 件作品），标题不再重叠；390 视口无横向溢出。
   - `qa/campus-desktop.png`（1440×1200）与 `qa/campus-mobile.png`（390×844）：详情页 hero 标题按两行排布，封面、meta、BRIEF 正常。
-- 交互脚本已验证：5 个项目、next 按钮切到 02、点击屏幕进入 `work/little-whale-run.html`、`?work=shicuo` 直接打开 05、fallback 5 张卡片；`Runtime.exceptionThrown` / console error 为 0。
+- 本地 CDP 回归脚本验证：初始 profile、6 tabs、5 项事实、3 个 chips、切到 01、URL 深链、profile CTA 进入第一件、详情页标题/下一件链接、`?work=shicuo`、fallback 6 张卡片均通过。fallback 下调试对象 `window.__portfolio` 不挂载（只影响测试读取，不影响页面）。
 - 上述截图覆盖了视觉布局与断点；交互仍建议在真实浏览器里手点一遍。
 
 ### 未覆盖
@@ -286,6 +305,7 @@ window.PORTFOLIO = {
 ### 已知限制
 
 - **校园二手书交易平台**：README 曾写 `https://xiaojinyi1.github.io/campus-book-market/`，但当前该 URL 和 `xiaojinyi1/campus-book-market` 仓库均 404；因此详情页只显示“课程项目 · 未公开部署”，没有放死链。以后部署后把 `live`/`source` 加回 `projects.js` 即可。
+- **GitHub Pages 尚未上线**：本地已完成 Three.js/profile 版本；远程仓库 `jinyi-portfolio` 仍需在 Git Bash 运行 `bash deploy-github.sh` 或在 GitHub 手动创建并推送。代理环境的远程上传被 CC Safety Net 禁止，不能代为完成。
 
 ---
 

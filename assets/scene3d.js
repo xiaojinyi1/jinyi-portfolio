@@ -331,6 +331,7 @@
     car.position.set(2.25, 0, 0.8);
     car.rotation.y = -1.18;
     car.scale.setScalar(0.7);
+    if (window.matchMedia && window.matchMedia("(max-width: 620px)").matches) car.visible = false;
     state.car = car;
     scene.add(car);
 

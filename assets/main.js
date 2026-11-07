@@ -7,10 +7,33 @@
   if (!data || !Array.isArray(data.projects) || !data.projects.length) return;
 
   var projects = data.projects;
+  var profile = data.profile || null;
+  var profileItem = profile ? {
+    isProfile: true,
+    slug: profile.slug || "profile",
+    title: profile.title || "JINYI",
+    titleEn: profile.titleEn || "PROFILE",
+    tagline: profile.tagline || "",
+    year: profile.year || (data.site && data.site.year) || "2025",
+    type: profile.type || "个人档案 / PROFILE",
+    role: profile.role || "",
+    summary: profile.summary || "",
+    stack: [{ name: "KEY", items: ["GPA 3.9", "Python 二级", "CET-4"] }],
+    accent: profile.accent || "#E3A45C",
+    accentDeep: profile.accentDeep || "#17130E",
+    cover: "",
+    poster: profile.poster || { background: "#17130E", foreground: "#F4EBDD", stamp: "PROFILE / 00" },
+    facts: profile.facts || []
+  } : null;
+  var items = profileItem ? [profileItem].concat(projects) : projects;
   var site = data.site || {};
   var settings = data.settings || {};
-  var total = projects.length;
-  var totalLabel = pad(total);
+  var total = items.length;
+  var worksTotal = projects.length;
+  var totalLabel = pad(worksTotal);
+  function numberFor(index) {
+    return profileItem ? index : index + 1;
+  }
   var app = document.getElementById("app");
   var stage = document.getElementById("stage");
   var scene = document.getElementById("scene");
@@ -55,8 +78,9 @@
     try {
       var slug = new URLSearchParams(window.location.search).get("work");
       if (!slug) return -1;
+      if (profileItem && slug === profileItem.slug) return 0;
       for (var i = 0; i < projects.length; i += 1) {
-        if (projects[i].slug === slug) return i;
+        if (projects[i].slug === slug) return i + (profileItem ? 1 : 0);
       }
     } catch (error) { /* file:// with a strict browser */ }
     return -1;
@@ -64,14 +88,76 @@
   function initialIndex() {
     var fromUrl = indexFromUrl();
     if (fromUrl >= 0) return fromUrl;
+    if (profileItem && settings.initial === profileItem.slug) return 0;
     for (var i = 0; i < projects.length; i += 1) {
-      if (projects[i].slug === settings.initial) return i;
+      if (projects[i].slug === settings.initial) return i + (profileItem ? 1 : 0);
     }
     return 0;
   }
 
   /* --------------------------------------------------------------- posters */
+  function profileFactsMarkup(facts, className) {
+    return (facts || []).map(function (fact) {
+      return '<article class="' + className + (fact.highlight ? " is-highlight" : "") + '">' +
+        '<span class="profile-fact-label">' + esc(fact.label) + "</span>" +
+        '<strong class="profile-fact-value">' + esc(fact.value) + "</strong>" +
+        '<span class="profile-fact-detail">' + esc(fact.detail) + "</span>" +
+      "</article>";
+    }).join("");
+  }
+
+  function buildProfilePoster(layer, item) {
+    var facts = item.facts || [];
+    var gpa = null;
+    var secondary = [];
+    facts.forEach(function (fact) {
+      if (fact.highlight && !gpa) gpa = fact;
+      else if (!fact.highlight) secondary.push(fact);
+    });
+    var cards = secondary.slice(0, 4).map(function (fact) {
+      return '<article class="pp-fact">' +
+        '<span class="pp-label">' + esc(fact.label) + "</span>" +
+        '<strong class="pp-value">' + esc(fact.value) + "</strong>" +
+        '<span class="pp-detail">' + esc(fact.detail) + "</span>" +
+      "</article>";
+    }).join("");
+
+    layer.innerHTML =
+      '<article class="poster poster-profile">' +
+        '<div class="pp-bg" aria-hidden="true"></div>' +
+        '<div class="pp-copy">' +
+          '<div class="pp-kicker"><span>' + esc(item.poster.stamp || "PROFILE / 00") + "</span>" +
+            "<span>WUHAN, CN · " + esc(item.year) + "</span></div>" +
+          '<div class="pp-body">' +
+            '<div class="pp-identity">' +
+              '<p class="pp-eyebrow">HELLO, I AM</p>' +
+              '<h2 class="pp-name">' + esc(item.title) + "</h2>" +
+              '<p class="pp-role">' + esc(item.tagline) + "</p>" +
+              '<div class="pp-gpa"><span>GPA</span><strong>' + esc(gpa ? gpa.value : "3.9") + "</strong><span>绩点</span></div>" +
+            "</div>" +
+            '<div class="pp-grid">' + cards + "</div>" +
+          "</div>" +
+          '<div class="pp-foot"><span><b>PROFILE</b> · 个人档案</span><span>PORTFOLIO / ' + esc(item.year) + "</span></div>" +
+        "</div>" +
+      "</article>";
+
+    var poster = layer.firstElementChild;
+    poster.style.setProperty("--poster-bg", item.poster.background);
+    poster.style.setProperty("--poster-fg", item.poster.foreground);
+    poster.style.setProperty("--stamp-color", item.accent);
+    poster.style.setProperty("--accent", item.accent);
+    layer.dataset.slug = item.slug;
+    layer.dataset.index = "0";
+    layer.dataset.profile = "true";
+    layer.setAttribute("aria-hidden", "true");
+  }
+
   function buildPoster(layer, project, index) {
+    if (project.isProfile) {
+      buildProfilePoster(layer, project);
+      return;
+    }
+    layer.dataset.profile = "false";
     var layout = project.poster && project.poster.layout === "full" ? "full" : "split";
     layer.innerHTML =
       '<article class="poster" data-layout="' + layout + '">' +
@@ -101,9 +187,9 @@
     poster.style.setProperty("--stamp-color", project.accent);
     if (layout === "split" && project.poster.imageSide === "left") poster.classList.add("image-left");
     art.style.backgroundImage = 'url("' + project.cover + '")';
-    $(".stamp", poster).textContent = project.poster.stamp || ("SELECTED " + pad(index + 1));
+    $(".stamp", poster).textContent = project.poster.stamp || ("SELECTED " + pad(numberFor(index)));
     $(".year", poster).textContent = project.year || "";
-    $(".poster-index", poster).textContent = pad(index + 1) + " / " + totalLabel;
+    $(".poster-index", poster).textContent = pad(numberFor(index)) + " / " + totalLabel;
     var title = $(".poster-title", poster);
     title.textContent = project.title;
     if (project.title.length > 8) title.classList.add("is-long");
@@ -118,6 +204,7 @@
   }
 
   function preload(project) {
+    if (!project.cover) return Promise.resolve();
     if (preloaded[project.cover]) return Promise.resolve();
     return new Promise(function (resolve) {
       var settled = false;
@@ -136,19 +223,22 @@
   }
 
   function updateUI(project, index) {
-    var counter = pad(index + 1) + " / " + totalLabel;
+    var isProfile = !!project.isProfile;
+    var number = numberFor(index);
     var topIndex = document.getElementById("topIndex");
     var topTotal = document.getElementById("topTotal");
-    if (topIndex) topIndex.textContent = pad(index + 1);
+    if (topIndex) topIndex.textContent = pad(number);
     if (topTotal) topTotal.textContent = totalLabel;
     var signCount = document.getElementById("signCount");
     if (signCount) signCount.textContent = totalLabel;
+    var signLabel = document.getElementById("signLabel");
+    if (signLabel) signLabel.textContent = isProfile ? "PROFILE" : "PROJECTS";
     var nowTitle = document.getElementById("nowTitle");
     if (nowTitle) nowTitle.textContent = project.title;
     var nowYear = document.getElementById("nowYear");
     if (nowYear) nowYear.textContent = project.year;
     var counterEl = document.getElementById("infoCounter");
-    if (counterEl) counterEl.textContent = "FEATURE " + counter;
+    if (counterEl) counterEl.textContent = isProfile ? "PROFILE / 00 · 个人档案" : "FEATURE " + pad(number) + " / " + totalLabel;
     var titleEl = document.getElementById("infoTitle");
     if (titleEl) titleEl.textContent = project.title;
     var taglineEl = document.getElementById("infoTagline");
@@ -159,9 +249,15 @@
     if (chipsEl) {
       chipsEl.innerHTML = "";
       var chips = [];
-      project.stack.forEach(function (group) {
-        if (group.items && group.items[0]) chips.push(group.items[0]);
-      });
+      if (isProfile) {
+        ((project.stack && project.stack[0] && project.stack[0].items) || []).forEach(function (label) {
+          if (label) chips.push(label);
+        });
+      } else {
+        (project.stack || []).forEach(function (group) {
+          if (group.items && group.items[0]) chips.push(group.items[0]);
+        });
+      }
       chips = chips.slice(0, 3);
       chips.forEach(function (label) {
         var li = document.createElement("li");
@@ -169,12 +265,35 @@
         chipsEl.appendChild(li);
       });
     }
+    var factsEl = document.getElementById("profileFacts");
+    if (factsEl) {
+      if (isProfile) {
+        factsEl.hidden = false;
+        factsEl.innerHTML = profileFactsMarkup(project.facts, "profile-fact");
+      } else {
+        factsEl.hidden = true;
+        factsEl.innerHTML = "";
+      }
+    }
+    if (info) info.classList.toggle("is-profile", isProfile);
     var cta = document.getElementById("openCase");
-    if (cta) cta.setAttribute("href", "work/" + project.slug + ".html");
+    if (cta) {
+      if (isProfile) {
+        cta.setAttribute("href", "#");
+        cta.dataset.profile = "true";
+        cta.setAttribute("aria-label", "查看五件作品");
+        cta.innerHTML = 'VIEW WORKS <span>→</span>';
+      } else {
+        cta.setAttribute("href", "work/" + project.slug + ".html");
+        cta.dataset.profile = "false";
+        cta.removeAttribute("aria-label");
+        cta.innerHTML = 'OPEN CASE <span>↗</span>';
+      }
+    }
     var hint = document.getElementById("screenHint");
-    if (hint) hint.textContent = settings.clickScreen === "next" ? "CLICK / NEXT" : "CLICK / OPEN";
+    if (hint) hint.textContent = isProfile ? "CLICK / START" : (settings.clickScreen === "next" ? "CLICK / NEXT" : "CLICK / OPEN");
     var touchHint = document.getElementById("touchHint");
-    if (touchHint) touchHint.textContent = "SWIPE / 滑动切换 · TAP / 点击进入";
+    if (touchHint) touchHint.textContent = isProfile ? "TAP / 进入作品" : "SWIPE / 滑动切换 · TAP / 点击进入";
     app.style.setProperty("--accent", project.accent);
     app.style.setProperty("--accent-soft", hexAlpha(project.accent, 0.18));
     app.style.setProperty("--accent-deep", project.accentDeep);
@@ -182,8 +301,10 @@
     screen.style.setProperty("--accent-soft", hexAlpha(project.accent, 0.18));
     var theme = document.querySelector('meta[name="theme-color"]');
     if (theme) theme.setAttribute("content", project.accentDeep);
-    document.title = project.title + " — " + (site.name || "JINYI");
-    screen.setAttribute("aria-label", project.title + " — " + project.tagline + "。点击或按回车进入详情。");
+    document.title = isProfile ? (site.title || (site.name || "JINYI") + " — Selected Works") : project.title + " — " + (site.name || "JINYI");
+    screen.setAttribute("aria-label", isProfile
+      ? "个人档案：JINYI，武汉理工大学大二在读，绩点 3.9。点击或按回车开始浏览作品。"
+      : project.title + " — " + project.tagline + "。点击或按回车进入详情。");
     if (tabs) {
       Array.prototype.forEach.call(tabs.querySelectorAll(".tab"), function (tab, i) {
         var active = i === index;
@@ -192,7 +313,7 @@
         tab.tabIndex = active ? 0 : -1;
       });
     }
-    if (cursorLabel) cursorLabel.textContent = settings.clickScreen === "next" ? "NEXT" : "OPEN CASE";
+    if (cursorLabel) cursorLabel.textContent = isProfile ? "VIEW WORKS" : (settings.clickScreen === "next" ? "NEXT" : "OPEN CASE");
     if (window.PORTFOLIO_3D && window.PORTFOLIO_3D.ready) window.PORTFOLIO_3D.setAccent(project.accent);
   }
 
@@ -208,20 +329,20 @@
   /* ----------------------------------------------------------------- tabs */
   function buildTabs() {
     if (!tabs) return;
-    projects.forEach(function (project, index) {
+    items.forEach(function (project, index) {
       var tab = document.createElement("button");
       tab.type = "button";
       tab.className = "tab";
       tab.dataset.index = String(index);
       tab.setAttribute("role", "tab");
-      tab.setAttribute("aria-label", "查看 " + project.title);
-      tab.innerHTML = '<span class="tab-num">' + pad(index + 1) + "</span>" +
-        '<span class="tab-title">' + esc(project.title) + "</span>";
+      tab.setAttribute("aria-label", project.isProfile ? "查看个人档案" : "查看 " + project.title);
+      tab.innerHTML = '<span class="tab-num">' + pad(numberFor(index)) + "</span>" +
+        '<span class="tab-title">' + esc(project.isProfile ? "关于" : project.title) + "</span>";
       tab.addEventListener("click", function () { select(index); });
       tabs.appendChild(tab);
     });
     tabs.setAttribute("role", "tablist");
-    tabs.setAttribute("aria-label", "作品切换");
+    tabs.setAttribute("aria-label", "个人档案与作品切换");
   }
 
   /* ---------------------------------------------------------------- bulbs */
@@ -252,7 +373,7 @@
     if (state.transitioning) { state.pending = next; return; }
     if (!state.ready) return;
 
-    var project = projects[next];
+    var project = items[next];
     var current = layers[state.activeLayer];
     var target = layers[1 - state.activeLayer];
     var mode = settings.transition && settings.transition.mode || "roll";
@@ -302,19 +423,22 @@
   function updateUrl(project) {
     try {
       var url = new URL(window.location.href);
-      url.searchParams.set("work", project.slug);
+      if (project.isProfile) url.searchParams.delete("work");
+      else url.searchParams.set("work", project.slug);
       window.history.replaceState(null, "", url);
     } catch (error) { /* file:// history can be restricted */ }
   }
 
   function openCurrent() {
-    var project = projects[state.index];
+    var project = items[state.index];
     if (!project) return;
+    if (project.isProfile) { select(1); return; }
     window.location.assign("work/" + project.slug + ".html");
   }
 
   function screenAction() {
     if (state.transitioning) return;
+    if (items[state.index] && items[state.index].isProfile) { select(1); return; }
     if (settings.clickScreen === "next") select(state.index + 1);
     else openCurrent();
   }
@@ -387,6 +511,17 @@
     hideLoader();
     if (!fallbackGrid) return;
     fallbackGrid.innerHTML = "";
+    if (profileItem) {
+      var profileCard = document.createElement("article");
+      profileCard.className = "work-card profile-card";
+      profileCard.innerHTML =
+        '<div class="profile-card-head"><span>PROFILE / 00</span><span>WUHAN, CN · ' + esc(profileItem.year) + "</span></div>" +
+        '<h2>' + esc(profileItem.title) + "</h2>" +
+        '<p class="profile-card-tagline">' + esc(profileItem.tagline) + "</p>" +
+        '<div class="profile-facts profile-facts--fallback">' + profileFactsMarkup(profileItem.facts, "profile-fact") + "</div>" +
+        '<p class="profile-card-note">' + esc(profileItem.summary) + "</p>";
+      fallbackGrid.appendChild(profileCard);
+    }
     projects.forEach(function (project, index) {
       var card = document.createElement("a");
       card.className = "work-card";
@@ -404,7 +539,7 @@
     state.index = initialIndex();
     buildTabs();
     buildBulbs();
-    var first = projects[state.index];
+    var first = items[state.index];
     buildPoster(layers[0], first, state.index);
     layers[0].classList.add("is-visible");
     layers[0].setAttribute("aria-hidden", "false");
@@ -432,7 +567,7 @@
     if (!window.CSS || !window.CSS.supports || !window.CSS.supports("transform-style", "preserve-3d")) fallback = true;
     if (fallback) { renderFallback(); return; }
 
-    var first = projects[initialIndex()];
+    var first = items[initialIndex()];
     Promise.race([
       preload(first),
       new Promise(function (resolve) { window.setTimeout(resolve, 1400); })
@@ -463,6 +598,13 @@
     var next = document.getElementById("nextWork");
     if (prev) prev.addEventListener("click", function () { select(state.index - 1); });
     if (next) next.addEventListener("click", function () { select(state.index + 1); });
+    var openCase = document.getElementById("openCase");
+    if (openCase) openCase.addEventListener("click", function (event) {
+      if (openCase.dataset.profile === "true") {
+        event.preventDefault();
+        select(1);
+      }
+    });
 
     stage.addEventListener("wheel", function (event) {
       if (event.ctrlKey) return;
@@ -489,15 +631,17 @@
         event.preventDefault(); select(total - 1);
       } else if ((event.key === "Enter" || event.key === " ") && document.activeElement === screen) {
         event.preventDefault(); screenAction();
-      } else if (/^[1-9]$/.test(event.key)) {
-        var n = Number(event.key) - 1;
-        if (n < total) { event.preventDefault(); select(n); }
+      } else if (/^[0-9]$/.test(event.key)) {
+        var keyNumber = Number(event.key);
+        var n = profileItem ? keyNumber : keyNumber - 1;
+        if (n >= 0 && n < total) { event.preventDefault(); select(n); }
       }
     });
 
     window.addEventListener("popstate", function () {
       var urlIndex = indexFromUrl();
       if (urlIndex >= 0 && urlIndex !== state.index) select(urlIndex);
+      else if (urlIndex < 0 && profileItem && state.index !== 0) select(0);
     });
 
     document.addEventListener("visibilitychange", function () {
@@ -509,8 +653,10 @@
       getState: function () {
         return {
           index: state.index,
-          slug: projects[state.index].slug,
+          slug: items[state.index].slug,
           total: total,
+          works: worksTotal,
+          profile: !!items[state.index].isProfile,
           transition: screen.dataset.transition || null,
           transitioning: state.transitioning,
           fallback: app.classList.contains("is-fallback"),
@@ -530,12 +676,12 @@
           scene: scene,
           reduceMotion: reduceMotion,
           finePointer: finePointer,
-          accent: projects[state.index].accent
+          accent: items[state.index].accent
         });
         if (engine && engine.ready) {
           var sideNote = document.getElementById("sideNote");
           if (sideNote) sideNote.textContent = "THREE.JS / WEBGL · SCROLL / DRAG / ARROWS";
-          engine.setAccent(projects[state.index].accent);
+          engine.setAccent(items[state.index].accent);
         }
       } catch (error) {
         if (window.console && console.warn) console.warn("3D scene skipped:", error);
