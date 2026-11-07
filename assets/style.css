@@ -1599,6 +1599,7 @@ body.has-webgl .scene .fog { z-index: 5; }
   .profile-fact.is-highlight .profile-fact-value { font-size: 21px; }
   .profile-fact.is-highlight .profile-fact-detail { text-align: left; }
   .profile-card { padding: 16px; }
+  .profile-card-head span:last-child { display: none; }
   .profile-card .profile-facts { grid-template-columns: 1fr; }
   .no-js-profile { font-size: 12px; line-height: 1.6; }
 }
